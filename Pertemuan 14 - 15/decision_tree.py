@@ -35,4 +35,17 @@ from sklearn.metrics import classification_report
 print(classification_report(y_test,y_pred))
 
 features = x.columns
-print(features)
+# print(features)
+
+
+#Import modules for Visualizing Decision trees
+from sklearn.tree import export_graphviz
+from six import StringIO 
+from IPython.display import Image  
+import pydotplus
+
+dot_data = StringIO()
+export_graphviz(model, out_file=dot_data,filled=True, rounded=True,special_characters=True,feature_names = features,class_names=['0','1'])
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())  
+graph.write_png('diabetes_set_export.png')
+Image(graph.create_png())
